@@ -1,0 +1,42 @@
+dversion: '3.7'
+services:
+    needle-api:
+        image: needle-api
+        # env_file:
+        #     - .env.production
+        build:
+            context: ./docker/
+            dockerfile: Dockerfile
+        ports:
+            # - "${BRIDGE_RPC_PORT}:${BRIDGE_RPC_PORT}"
+            # - "${BRIDGE_API_PORT}:${BRIDGE_API_PORT}"
+            - "3000:3000"
+        depends_on:
+            - db
+        networks:
+            flourish:
+                aliases:
+                    - chat-bridge
+            needle-service-network:
+    db:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        # restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_TCP_PORT: "${DB_PORT}"
+        ports:
+            - "${DB_PORT}:${DB_PORT}"
+        networks:
+            flourish:
+                aliases:
+                    - needle-db
+            needle-service-network:
+networks:
+  needle-service-network:
+    driver: bridge
+  flourish:
+    external: true
