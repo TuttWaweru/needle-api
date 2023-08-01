@@ -1,23 +1,23 @@
 dversion: '3.7'
 services:
-    needle-api:
-        image: needle-api
-        env_file:
-            - .env
-        build:
-            context: ./docker/
-            dockerfile: Dockerfile
-        ports:
-            # - "${BRIDGE_RPC_PORT}:${BRIDGE_RPC_PORT}"
-            # - "${BRIDGE_API_PORT}:${BRIDGE_API_PORT}"
-            - "3000:3000"
-        depends_on:
-            - db
-        networks:
-            flourish:
-                aliases:
-                    - chat-bridge
-            needle-service-network:
+    # needle-api:
+    #     image: needle-api
+    #     env_file:
+    #         - .env
+    #     build:
+    #         context: ./docker/
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         # - "${BRIDGE_RPC_PORT}:${BRIDGE_RPC_PORT}"
+    #         # - "${BRIDGE_API_PORT}:${BRIDGE_API_PORT}"
+    #         - "3000:3000"
+    #     depends_on:
+    #         - db
+    #     networks:
+    #         flourish:
+    #             aliases:
+    #                 - needle-api
+    #         needle-service-network:
     db:
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
