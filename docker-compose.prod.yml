@@ -2,8 +2,8 @@ dversion: '3.7'
 services:
     needle-api:
         image: needle-api
-        # env_file:
-        #     - .env.production
+        env_file:
+            - .env
         build:
             context: ./docker/
             dockerfile: Dockerfile
