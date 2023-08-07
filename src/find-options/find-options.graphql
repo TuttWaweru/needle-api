@@ -1,0 +1,97 @@
+input UniversalArgsInput {
+	ids: [Int]
+	limit: Int
+	offset: Int
+	search: [SearchArgsInput]
+	where: WhereArgsInput
+	or: [WhereArgsInput]
+	links: [String]
+	sortBy: [SortArgsInput]
+}
+
+input WhereArgsInput {
+	and: [SearchArgsInput]
+	search: [SearchArgsInput]
+	between: [BetweenArgsInput]
+	operators: [OperatorArgsInput]
+}
+input SearchArgsInput {
+	key: String
+	value: String
+}
+input SortArgsInput {
+	key: String
+	value: SortOption
+}
+input OperatorArgsInput {
+	key: String
+	operator: OperationOptions
+	value: String
+}
+enum OperationOptions {
+	less
+	notLess
+	more
+	notMore
+	not
+	equal
+	notEqual
+	in
+	notIn
+	isNull
+	isNotNull
+}
+enum SortOption {
+	high
+	low
+}
+input BetweenArgsInput {
+	property: String
+	from: String
+	to: String
+}
+input JoinTypeInput {
+	left: [JoinEntityInput]
+	leftSelect: [JoinEntityInput]
+	inner: [JoinEntityInput]
+	innerSelect: [JoinEntityInput]
+}
+input JoinEntityInput {
+  relationship: String
+  alias: String
+  table: String
+}
+input SelectEntityInput {
+  property: String
+  value: String
+}
+input WhereEntityInput {
+  type: String
+  value: String
+}
+enum OrderByEnum {
+  ASC
+  DESC
+}
+input OrderByEntityInput {
+  type: OrderByEnum
+  value: String
+}
+
+enum FindExecuteOptions {
+	one
+	many
+	rawOone
+	rawMany
+	manyCount
+	oneOrFail
+}
+input FindArgumentsInput {
+  joins: JoinTypeInput
+  selects: [SelectEntityInput]
+  wheres: [WhereEntityInput]
+  execute: FindExecuteOptions!
+  orderBys: [OrderByEntityInput]
+  groups: [String]
+  limit: Int
+}
